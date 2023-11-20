@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose City</title>
+</head>
+<style>
+    /* Style the label as a block-level element */
+    
+        /* Initially hide the form */
+        #dynamicForm {
+            display: none;
+        }
+        #geneticForm {
+            display: none;
+        }
+        .cityInput {
+            display: none;
+        }
+    
+</style>
+<body>
+
+    <h2>Checkbox Example</h2>
+
+    <!-- Checkbox -->
+    <label for="myCheckboxA">City A</label>
+    <input type="checkbox" id="myCheckboxA" name="myCheckbox" onchange="toggleCityInput('myCheckboxA')"> 
+    <input type="number" id="cityInputA" class="cityInput" name="cityInputA" min="1" max="10" placeholder="Enter value" value="5"> <br>
+    <label for="myCheckboxA">City B</label>
+    <input type="checkbox" id="myCheckboxB" name="myCheckbox" onchange="toggleCityInput('myCheckboxB')"> 
+    <input type="number" id="cityInputB" class="cityInput" name="cityInputB" min="1" max="10" placeholder="Enter value" value="5"> <br>
+
+    <label for="myCheckboxA">City C</label>
+    <input type="checkbox" id="myCheckboxC" name="myCheckbox" onchange="toggleCityInput('myCheckboxC')"> 
+    <input type="number" id="cityInputC" class="cityInput" name="cityInputC" min="1" max="10" placeholder="Enter value" value="5"> <br>
+
+    <label for="myCheckboxA">City D</label>
+    <input type="checkbox" id="myCheckboxD" name="myCheckbox" onchange="toggleCityInput('myCheckboxD')"> 
+    <input type="number" id="cityInputD" class="cityInput" name="cityInputD" min="1" max="10" placeholder="Enter value" value="5"> <br>
+
+    <label for="myCheckboxA">City E</label>
+    <input type="checkbox" id="myCheckboxE" name="myCheckbox" onchange="toggleCityInput('myCheckboxE')"> 
+    <input type="number" id="cityInputE" class="cityInput" name="cityInputE" min="1" max="10" placeholder="Enter value" value="5"> <br>
+
+    <label for="myCheckboxA">City F</label>
+    <input type="checkbox" id="myCheckboxF" name="myCheckbox" onchange="toggleCityInput('myCheckboxF')"> 
+    <input type="number" id="cityInputF" class="cityInput" name="cityInputF" min="1" max="10" placeholder="Enter value" value="5"> <br>
+
+    <label for="myCheckboxA">City G</label>
+    <input type="checkbox" id="myCheckboxG" name="myCheckbox" onchange="toggleCityInput('myCheckboxG')"> 
+    <input type="number" id="cityInputG" class="cityInput" name="cityInputG" min="1" max="10" placeholder="Enter value" value="5"> <br>
+
+    <label for="myCheckboxA">City H</label>
+    <input type="checkbox" id="myCheckboxH" name="myCheckbox" onchange="toggleCityInput('myCheckboxH')"> 
+    <input type="number" id="cityInputH" class="cityInput" name="cityInputH" min="1" max="10" placeholder="Enter value" value="5"> <br>
+
+    <label for="selectMenu">Choose an option:</label>
+    <select id="selectMenu" name="selectMenu" onchange="showForm()">
+        <option value="option0">Select Algorithm</option>
+        <option value="option1">Genetic Algorithm</option>
+        <option value="option2">A* Search</option>
+    </select>
+
+    <form id="dynamicForm">
+        <div>
+            <label for="interestWeight">Interest Weight:</label>
+            <input type="number" id="interestWeight" name="interestWeight" min="0" max="1" step="0.1" value="0.7">
+        </div>
+        <div>
+            <label for="distanceWeight">Distance Weight:</label>
+            <input type="number" id="distanceWeight" name="distanceWeight" min="0" max="1" step="0.1" value="0.3">
+        </div>
+        <div>
+            <label for="startCity">Start City:</label>
+            <input type="text" id="startCity" name="startCity">
+        </div>
+        <div>
+            <label for="goalCity">Goal City:</label>
+            <input type="text" id="goalCity" name="goalCity">
+        </div>
+        <div>
+            <label for="minCitiesToVisit">Min Cities to Visit:</label>
+            <input type="number" id="minCitiesToVisit" name="minCitiesToVisit" min="1" value="2">
+        </div>
+
+        <button type="button" onclick="calculatePath()">Calculate Path</button>
+        
+    </form >
+    <div id="result"></div>
+    <form id="geneticForm">
+        <div>
+            <label for="mutationRate">Mutation Rate:</label>
+            <input type="number" id="mutationRate" name="mutationRate" min="0" max="1" step="0.1" value="0.7">
+        </div>
+        <div>
+            <label for="Population">Population Iterations:</label>
+            <input type="number" id="population" name="population" min="0" max="100" step="1" value="50">
+        </div>
+        <button type="button" onclick="">Calculate Path</button>
+    </form>
+    <script>
+        function showForm() {
+            // Get the selected value from the dropdown
+            var selectedOption = document.getElementById("selectMenu").value;
+
+            // Get the form element
+            var dynamicForm = document.getElementById("dynamicForm");
+            var geneticForm = document.getElementById("geneticForm");
+            // Show or hide the form based on the selected option
+            if (selectedOption === "option2") {
+                dynamicForm.style.display = "block";
+            } else {
+                dynamicForm.style.display = "none";
+            }
+            if (selectedOption === "option1") {
+                geneticForm.style.display = "block";
+            } else {
+                geneticForm.style.display = "none";
+            }
+        }
+        function toggleCityInput(checkboxId) {
+            var checkbox = document.getElementById(checkboxId);
+            var cityInputId = "cityInput" + checkboxId.slice(-1); // Extract the last character of checkboxId
+            var cityInput = document.getElementById(cityInputId);
+
+            if (checkbox.checked) {
+                cityInput.style.display = "inline-block";
+            } else {
+                cityInput.style.display = "none";
+            }
+        }
+        function getCityCoordinates(cityName) {
+            // Example: return coordinates for the city
+            if (cityName === 'A') {
+                return { x: 10, y: 20 };
+            } else if (cityName === 'B') {
+                return { x: 30, y: 40 };
+            } else if (cityName === 'C') {
+                return { x: 50, y: 60 };
+            } else if (cityName === 'D') {
+                return { x: 70, y: 80 };
+            } else if (cityName === 'E') {
+                return { x: 90, y: 100 };
+            } else if (cityName === 'F') {
+                return { x: 110, y: 120 };
+            } else if (cityName === 'G') {
+                return { x: 130, y: 140 };
+            } else if (cityName === 'H') {
+                return { x: 150, y: 160 };
+            } else {
+                // Handle unknown city names
+                return { x: 0, y: 0 };
+            }
+        }
+
+        function calculatePath() {
+            // Fetch data from form fields
+
+            var selectedCities = [];
+            var checkboxes = document.querySelectorAll('input[name="myCheckbox"]:checked');
+            
+            checkboxes.forEach(function(checkbox) {
+                var cityId = checkbox.id;
+                var cityInputId = "cityInput" + cityId.slice(-1);
+                var cityName = cityId.slice(-1);
+                var cityInput = document.getElementById(cityInputId);
+                var cityValue = cityInput.value.trim() === '' ? 0 : parseInt(cityInput.value);
+
+                selectedCities.push({
+                    name: cityName,
+                    coordinates: getCityCoordinates(cityName), // You need to implement getCityCoordinates function
+                    interest: cityValue
+                });
+            });
+
+            console.log(selectedCities);
+
+            const formData = {
+                interest_weight: parseFloat(document.getElementById('interestWeight').value),
+                distance_weight: parseFloat(document.getElementById('distanceWeight').value),
+                start_city: document.getElementById('startCity').value,
+                goal_city: document.getElementById('goalCity').value,
+                min_cities_to_visit: parseInt(document.getElementById('minCitiesToVisit').value),
+                cities: selectedCities,
+            };
+
+            // Make a POST request to the backend
+            fetch('/calculate_path', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the result to the user
+                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
